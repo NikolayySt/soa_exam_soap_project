@@ -1,0 +1,94 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from StudentServiceService WSDL service -->
+
+  <service name="StudentService" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://service.masters.pld.uni"/>
+      <parameter name="wsdlServiceElement" value="StudentServiceService"/>
+      <parameter name="schemaQualified" value="http://service.masters.pld.uni,http://model.masters.pld.uni"/>
+      <parameter name="wsdlServicePort" value="StudentService"/>
+      <parameter name="className" value="uni.pld.masters.service.StudentServiceSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="StudentService"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="findStudents" qname="operNS:findStudents" xmlns:operNS="http://service.masters.pld.uni" returnQName="retNS:findStudentsReturn" xmlns:retNS="http://service.masters.pld.uni" returnType="rtns:ArrayOf_xsd_anyType" xmlns:rtns="http://service.masters.pld.uni" returnItemQName="tns:item" xmlns:tns="http://service.masters.pld.uni" soapAction="" >
+      </operation>
+      <operation name="createStudent" qname="operNS:createStudent" xmlns:operNS="http://service.masters.pld.uni" returnQName="retNS:createStudentReturn" xmlns:retNS="http://service.masters.pld.uni" returnType="rtns:long" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:student" xmlns:pns="http://service.masters.pld.uni" type="tns:Student" xmlns:tns="http://model.masters.pld.uni"/>
+      </operation>
+      <parameter name="allowedMethods" value="findStudents createStudent"/>
+
+      <typeMapping
+        xmlns:ns="http://service.masters.pld.uni"
+        qname="ns:>createStudentResponse"
+        type="java:uni.pld.masters.service.CreateStudentResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://model.masters.pld.uni"
+        qname="ns:Student"
+        type="java:uni.pld.masters.model.Student"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://service.masters.pld.uni"
+        qname="ns:ArrayOf_xsd_anyType"
+        type="java:java.lang.Object[]"
+        innerType="cmp-ns:anyType" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://service.masters.pld.uni"
+        qname="ns:>findStudents"
+        type="java:uni.pld.masters.service.FindStudents"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://service.masters.pld.uni"
+        qname="ns:>findStudentsResponse"
+        type="java:uni.pld.masters.service.FindStudentsResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://service.masters.pld.uni"
+        qname="ns:>createStudent"
+        type="java:uni.pld.masters.service.CreateStudent"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://model.masters.pld.uni"
+        qname="ns:Specialty"
+        type="java:uni.pld.masters.model.Specialty"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://model.masters.pld.uni"
+        qname="ns:University"
+        type="java:uni.pld.masters.model.University"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>
